@@ -23,9 +23,13 @@
 
             var x = document.getElementById("loc");
 
+            var options = {
+                enableHighAccuracy: true
+            }
+
             function getLocation() {
                 if (navigator.geolocation) {
-                    navigator.geolocation.watchPosition(showPosition);
+                    navigator.geolocation.watchPosition(showPosition, error, options);
                 } else {
                     x.innerHTML = "Geolocation is not supported by this browser.";
                 }
@@ -33,6 +37,10 @@
 
             function showPosition(position) {
                 x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude; 
+            }
+
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
             }
 
             setInterval(getLocation, 20);
